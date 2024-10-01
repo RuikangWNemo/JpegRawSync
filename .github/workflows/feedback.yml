@@ -1,0 +1,26 @@
+import requests
+
+def submit_feedback_to_github(feedback):
+    # GitHub API 提交 issue 的 URL
+    url = "https://api.github.com/repos/your-username/feedback-repository/issues"  # 替换为你仓库的地址
+    token = "your_personal_access_token"  # 你的 GitHub personal access token
+    headers = {
+        "Authorization": f"token {token}",
+        "Accept": "application/vnd.github.v3+json"
+    }
+    data = {
+        "title": "用户反馈",  # Issue 标题
+        "body": feedback     # Issue 内容
+    }
+
+    # 提交用户反馈作为 issue
+    response = requests.post(url, json=data, headers=headers)
+
+    if response.status_code == 201:
+        print("反馈已成功提交到 GitHub！")
+    else:
+        print(f"提交失败，状态码: {response.status_code}")
+
+if __name__ == "__main__":
+    user_feedback = input("请输入您的反馈内容: ")
+    submit_feedback_to_github(user_feedback)
